@@ -14,7 +14,7 @@ def draw_matrix(pixels):
     column_index = 0
     column = []
 
-    for i in range(8):
+    for i in range(SCREEN_HEIGHT/8):
         for j in range(SCREEN_WIDTH):
             page = 0
             for k in range(8):
