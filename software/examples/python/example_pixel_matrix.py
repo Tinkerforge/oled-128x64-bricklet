@@ -11,8 +11,8 @@ from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_oled_128x64 import OLED128x64
 
 def draw_matrix(pixels):
-    row_index = 0
-    row = []
+    column_index = 0
+    column = []
 
     for i in range(8):
         for j in range(SCREEN_WIDTH):
@@ -21,17 +21,17 @@ def draw_matrix(pixels):
                 if pixels[i*8 + k][j] == 1:
                     page |= 1 << k
 
-            if len(row) <= row_index:
-                row.append([]) 
+            if len(column) <= column_index:
+                column.append([])
 
-            row[row_index].append(page)
-            if len(row[row_index]) == SCREEN_HEIGHT:
-                row_index += 1
+            column[column_index].append(page)
+            if len(column[column_index]) == SCREEN_HEIGHT:
+                column_index += 1
 
         oled.new_window(0, SCREEN_WIDTH-1, 0, 7)
 
-        for i in range(len(row)):
-            oled.write(row[i])
+    for i in range(len(column)):
+        oled.write(column[i])
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
@@ -53,7 +53,7 @@ if __name__ == "__main__":
                 pixel_matrix[h][w] = True
             if h/5 % 2 == 0:
                 pixel_matrix[h][w] = True
-        
+
     draw_matrix(pixel_matrix)
 
     raw_input('Press key to exit\n') # Use input() in Python 3

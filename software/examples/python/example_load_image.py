@@ -3,7 +3,7 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "ABC" # Change to your UID
+UID = "XYZ" # Change to your UID
 SCREEN_WIDTH = 128
 SCREEN_HEIGHT = 64
 
