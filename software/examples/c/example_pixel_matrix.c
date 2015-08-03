@@ -10,14 +10,13 @@
 #define SCREEN_HEIGHT 64
 
 void draw_matrix(OLED128x64 *oled, bool (*pixels)[SCREEN_WIDTH]) {
-	uint8_t column[SCREEN_HEIGHT/8][SCREEN_WIDTH];
-	uint8_t column_write[64];
 	int i = 0;
 	int j = 0;
 	int k = 0;
 	int l = 0;
 	uint8_t page = 0;
-	uint8_t column_index = 0;
+	uint8_t column_write[64];
+	uint8_t column[SCREEN_HEIGHT/8][SCREEN_WIDTH];
 
 	for (i = 0; i < SCREEN_HEIGHT/8; i++) {
 		for (j = 0; j < SCREEN_WIDTH; j++) {
@@ -40,13 +39,13 @@ void draw_matrix(OLED128x64 *oled, bool (*pixels)[SCREEN_WIDTH]) {
 			column_write[l] = column[i][j];
 			l++;
 		}
-		oled_128x64_write(oled, column[i]);
+		oled_128x64_write(oled, column_write);
 		l = 0;
 		for (k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++) {
 			column_write[l] = column[i][k];
 			l++;
 		}
-		oled_128x64_write(oled, column[i]);
+		oled_128x64_write(oled, column_write);
 	}
 }
 
