@@ -5,7 +5,7 @@
 uid=XYZ
 
 # clear display
-./tinkerforge call oled-64x48-bricklet $uid clear-display
+tinkerforge call oled-64x48-bricklet $uid clear-display
 
 # write "Hello World" starting from upper left corner of the screen
-./tinkerforge call oled-64x48-bricklet $uid write-line 0 0 "Hello World"
+tinkerforge call oled-64x48-bricklet $uid write-line 0 0 "Hello World"
