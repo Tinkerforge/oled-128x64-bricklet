@@ -14,7 +14,7 @@ def draw_matrix(pixels):
     column_index = 0
     column = []
 
-    for i in range(SCREEN_HEIGHT/8):
+    for i in range(SCREEN_HEIGHT//8):
         for j in range(SCREEN_WIDTH):
             page = 0
             for k in range(8):
@@ -49,9 +49,9 @@ if __name__ == "__main__":
     # Draw check pattern
     for w in range(SCREEN_WIDTH):
         for h in range(SCREEN_HEIGHT):
-            if w/5 % 2 == 0:
+            if w//5 % 2 == 0:
                 pixel_matrix[h][w] = True
-            if h/5 % 2 == 0:
+            if h//5 % 2 == 0:
                 pixel_matrix[h][w] = True
 
     draw_matrix(pixel_matrix)
