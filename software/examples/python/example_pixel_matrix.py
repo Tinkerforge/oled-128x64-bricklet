@@ -8,7 +8,7 @@ SCREEN_WIDTH = 128
 SCREEN_HEIGHT = 64
 
 from tinkerforge.ip_connection import IPConnection
-from tinkerforge.bricklet_oled_128x64 import OLED128x64
+from tinkerforge.bricklet_oled_128x64 import BrickletOLED128x64
 
 def draw_matrix(pixels):
     column_index = 0
@@ -35,7 +35,7 @@ def draw_matrix(pixels):
 
 if __name__ == "__main__":
     ipcon = IPConnection() # Create IP connection
-    oled = OLED128x64(UID, ipcon) # Create device object
+    oled = BrickletOLED128x64(UID, ipcon) # Create device object
 
     ipcon.connect(HOST, PORT) # Connect to brickd
     # Don't use device before ipcon is connected
