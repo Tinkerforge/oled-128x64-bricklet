@@ -13,7 +13,7 @@ type
     oled: TBrickletOLED128x64;
   public
     procedure Execute;
-end;
+  end;
 
 const
   HOST = 'localhost';
