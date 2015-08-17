@@ -4,12 +4,9 @@ program ExamplePixelMatrix;
 {$ifdef FPC}{$mode OBJFPC}{$H+}{$endif}
 
 uses
-  SysUtils, Math, IPConnection, BrickletOLED128x64;
+  Math, SysUtils, IPConnection, BrickletOLED128x64;
 
 const
-  HOST = 'localhost';
-  PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
   SCREEN_WIDTH = 128;
   SCREEN_HEIGHT = 64;
 
@@ -22,7 +19,12 @@ type
     procedure DrawMatrix(pixels: TPixelMatrix);
   public
     procedure Execute;
-end;
+  end;
+
+const
+  HOST = 'localhost';
+  PORT = 4223;
+  UID = 'XYZ'; { Change to your UID }
 
 var
   e: TExample;
