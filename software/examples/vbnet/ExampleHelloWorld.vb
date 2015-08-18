@@ -7,7 +7,7 @@ Module ExampleHelloWorld
 
     Sub Main()
         Dim ipcon As New IPConnection() ' Create IP connection
-        Dim oled As New BrickletOLED64x48(UID, ipcon) ' Create device object
+        Dim oled As New BrickletOLED128x64(UID, ipcon) ' Create device object
 
         ipcon.Connect(HOST, PORT) ' Connect to brickd
         ' Don't use device before ipcon is connected
