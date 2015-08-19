@@ -2,11 +2,13 @@
 
 use Tinkerforge::IPConnection;
 use Tinkerforge::BrickletOLED128x64;
+
 use constant HOST => 'localhost';
 use constant PORT => 4223;
 use constant UID => 'XYZ'; # Change to your UID
 use constant SCREEN_WIDTH => 128;
 use constant SCREEN_HEIGHT => 64;
+
 my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $oled = Tinkerforge::BrickletOLED128x64->new(&UID, $ipcon); # Create device object
 
@@ -51,9 +53,9 @@ sub draw_matrix {
 }
 
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
-# Don't use device before $ipcon is connected
+# Don't use device before ipcon is connected
 
-#Clear display
+# Clear display
 $oled->clear_display();
 
 # Pixel matrix with all pixels turned off

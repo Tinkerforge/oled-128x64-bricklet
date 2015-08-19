@@ -11,13 +11,13 @@ my $ipcon = Tinkerforge::IPConnection->new(); # Create IP connection
 my $oled = Tinkerforge::BrickletOLED128x64->new(&UID, $ipcon); # Create device object
 
 $ipcon->connect(&HOST, &PORT); # Connect to brickd
-# Don't use device before $ipcon is connected
+# Don't use device before ipcon is connected
 
-#Clear display
+# Clear display
 $oled->clear_display();
 
 # Write "Hello World" starting from upper left corner of the screen
-$oled->write_line(0, 0, 'Hello World');
+$oled->write_line(0, 0, "Hello World");
 
 print "Press any key to exit...\n";
 <STDIN>;
