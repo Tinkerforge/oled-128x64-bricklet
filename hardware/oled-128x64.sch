@@ -462,7 +462,7 @@ $EndComp
 Wire Wire Line
 	6950 5050 6950 5200
 Text Notes 6800 5450 0    60   ~ 0
-oder 760k?
+12.5µA -> 400k
 Wire Wire Line
 	8500 4250 6950 4250
 Wire Wire Line
@@ -587,18 +587,10 @@ Connection ~ 8400 3950
 Wire Wire Line
 	8500 4050 8400 4050
 Connection ~ 8400 4050
-Wire Wire Line
-	2700 3450 8500 3450
-Wire Wire Line
-	2600 3550 8500 3550
 Text Notes 3700 3450 0    60   ~ 0
 SCLK
 Text Notes 3700 3550 0    60   ~ 0
 SDIN
-Wire Wire Line
-	5050 3650 2900 3650
-Wire Wire Line
-	5150 3750 2800 3750
 Text Notes 3700 3750 0    60   ~ 0
 D/C
 Text Notes 3700 3650 0    60   ~ 0
@@ -644,49 +636,19 @@ Wire Wire Line
 $Comp
 L R_PACK4 RP1
 U 1 1 558C2C1A
-P 4200 3100
-F 0 "RP1" H 4200 3550 40  0000 C CNN
-F 1 "2k2" H 4200 3050 40  0000 C CNN
-F 2 "kicad-libraries:0603X4" H 4200 3100 60  0001 C CNN
-F 3 "" H 4200 3100 60  0000 C CNN
-	1    4200 3100
-	0    1    1    0   
+P 4450 3400
+F 0 "RP1" H 4450 3850 40  0000 C CNN
+F 1 "2k2" H 4450 3350 40  0000 C CNN
+F 2 "kicad-libraries:0603X4" H 4450 3400 60  0001 C CNN
+F 3 "" H 4450 3400 60  0000 C CNN
+	1    4450 3400
+	1    0    0    1   
 $EndComp
-$Comp
-L 3V3 #PWR022
-U 1 1 558C30E7
-P 4400 2800
-F 0 "#PWR022" H 4400 2900 40  0001 C CNN
-F 1 "3V3" H 4400 2925 40  0000 C CNN
-F 2 "" H 4400 2800 60  0000 C CNN
-F 3 "" H 4400 2800 60  0000 C CNN
-	1    4400 2800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4250 2900 4550 2900
-Wire Wire Line
-	4400 2800 4400 2900
-Connection ~ 4400 2900
-Connection ~ 4350 2900
-Connection ~ 4450 2900
-Wire Wire Line
-	4250 3300 4250 3650
-Connection ~ 4250 3650
-Wire Wire Line
-	4350 3300 4350 3750
-Connection ~ 4350 3750
-Wire Wire Line
-	4450 3300 4450 3450
-Connection ~ 4450 3450
-Wire Wire Line
-	4550 3300 4550 3550
-Connection ~ 4550 3550
 NoConn ~ 8500 3650
 Wire Wire Line
 	8450 2650 8450 2850
 Wire Wire Line
-	5050 2950 5050 3650
+	5050 2950 5050 3700
 Wire Wire Line
 	8500 3250 8450 3250
 Wire Wire Line
@@ -787,4 +749,64 @@ Connection ~ 3150 3550
 Wire Wire Line
 	3050 4450 3050 3650
 Connection ~ 3050 3650
+Wire Wire Line
+	2800 3750 4050 3750
+Wire Wire Line
+	4050 3750 4050 3650
+Wire Wire Line
+	4050 3650 4250 3650
+Wire Wire Line
+	4250 3750 4150 3750
+Wire Wire Line
+	4150 3750 4150 3700
+Wire Wire Line
+	4150 3700 3950 3700
+Wire Wire Line
+	3950 3700 3950 3650
+Wire Wire Line
+	3950 3650 2900 3650
+Wire Wire Line
+	4250 3550 4050 3550
+Wire Wire Line
+	4050 3550 4050 3450
+Wire Wire Line
+	4050 3450 2700 3450
+Wire Wire Line
+	4250 3450 4150 3450
+Wire Wire Line
+	4150 3450 4150 3500
+Wire Wire Line
+	4150 3500 3950 3500
+Wire Wire Line
+	3950 3500 3950 3550
+Wire Wire Line
+	3950 3550 2600 3550
+Wire Wire Line
+	8500 3450 4850 3450
+Wire Wire Line
+	4850 3450 4850 3550
+Wire Wire Line
+	4850 3550 4650 3550
+Wire Wire Line
+	8500 3550 4950 3550
+Wire Wire Line
+	4950 3550 4950 3500
+Wire Wire Line
+	4950 3500 4750 3500
+Wire Wire Line
+	4750 3500 4750 3450
+Wire Wire Line
+	4750 3450 4650 3450
+Wire Wire Line
+	5150 3750 4800 3750
+Wire Wire Line
+	4800 3750 4800 3650
+Wire Wire Line
+	4800 3650 4650 3650
+Wire Wire Line
+	4650 3750 4700 3750
+Wire Wire Line
+	4700 3750 4700 3700
+Wire Wire Line
+	4700 3700 5050 3700
 $EndSCHEMATC
