@@ -6,8 +6,8 @@ public class ExampleHelloWorld {
 	private static final int PORT = 4223;
 	private static final String UID = "XYZ"; // Change to your UID
 
-	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
-	//       might normally want to catch are described in the documentation
+	// Note: To make the example code cleaner we do not handle exceptions. Exceptions
+	//       you might normally want to catch are described in the documentation
 	public static void main(String args[]) throws Exception {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickletOLED128x64 oled = new BrickletOLED128x64(UID, ipcon); // Create device object

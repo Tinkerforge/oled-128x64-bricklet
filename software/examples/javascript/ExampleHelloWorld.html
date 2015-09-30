@@ -34,15 +34,16 @@
                 var oled = new Tinkerforge.BrickletOLED128x64(UID, ipcon); // Create device object
                 ipcon.connect(HOST, PORT,
                     function(error) {
-                        textArea.value += 'Error: '+error+ '\n';
+                        textArea.value += 'Error: ' + error + '\n';
                     }
                 ); // Connect to brickd
                 // Don't use device before ipcon is connected
 
                 ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
-                    function(connectReason) {
+                    function (connectReason) {
                         // Clear display
                         oled.clearDisplay();
+
                         // Write "Hello World" starting from upper left corner of the screen
                         oled.writeLine(0, 0, 'Hello World');
                     }

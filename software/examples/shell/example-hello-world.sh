@@ -1,11 +1,10 @@
 #!/bin/sh
-# connects to localhost:4223 by default, use --host and --port to change it
+# Connects to localhost:4223 by default, use --host and --port to change this
 
-# change to your UID
-uid=XYZ
+uid=XYZ # Change to your UID
 
-# clear display
-tinkerforge call oled-64x48-bricklet $uid clear-display
+# Clear display
+tinkerforge call oled-128x64-bricklet $uid clear-display
 
-# write "Hello World" starting from upper left corner of the screen
-tinkerforge call oled-64x48-bricklet $uid write-line 0 0 "Hello World"
+# Write "Hello World" starting from upper left corner of the screen
+tinkerforge call oled-128x64-bricklet $uid write-line 0 0 "Hello World"

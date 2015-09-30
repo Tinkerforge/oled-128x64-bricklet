@@ -14,42 +14,46 @@ const SCREEN_HEIGHT = 64;
 
 function drawMatrix($oled, $pixels)
 {
-	$column = array(array());
+    $column = array(array());
 
-	for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
-	{
-		for ($j = 0; $j < SCREEN_WIDTH; $j++)
-		{
-			$page = 0;
+    for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
+    {
+        for ($j = 0; $j < SCREEN_WIDTH; $j++)
+        {
+            $page = 0;
 
-			for ($k = 0; $k < 8; $k++)
-			{
-				if ($pixels[($i*8) + $k][$j] == true)
-				{
-					$page |= 1 << $k;
-				}
-			}
+            for ($k = 0; $k < 8; $k++)
+            {
+                if ($pixels[($i*8) + $k][$j])
+                {
+                    $page |= 1 << $k;
+                }
+            }
 
-			$column[$i][$j] = $page;
-		}
-	}
-	$oled->newWindow(0, SCREEN_WIDTH-1, 0, 7);
+            $column[$i][$j] = $page;
+        }
+    }
 
-	for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
-	{
-		$l = 0;
-		for ($j = 0; $j < SCREEN_WIDTH/2; $j++) {
-			$column_write[$l] = $column[$i][$j];
-			$l++;
-		}
-		$oled->write($column_write);
-		$l = 0;
-		for ($k = SCREEN_WIDTH/2; $k < SCREEN_WIDTH; $k++) {
-			$column_write[$l] = $column[$i][$k];
-			$l++;
-		}
-		$oled->write($column_write);
-	}
+    $oled->newWindow(0, SCREEN_WIDTH-1, 0, 7);
+
+    for ($i = 0; $i < SCREEN_HEIGHT/8; $i++)
+    {
+        $l = 0;
+        for ($j = 0; $j < SCREEN_WIDTH/2; $j++) {
+            $column_write[$l] = $column[$i][$j];
+            $l++;
+        }
+
+        $oled->write($column_write);
+
+        $l = 0;
+        for ($k = SCREEN_WIDTH/2; $k < SCREEN_WIDTH; $k++) {
+            $column_write[$l] = $column[$i][$k];
+            $l++;
+        }
+
+        $oled->write($column_write);
+    }
 }
 
 $ipcon = new IPConnection(); // Create IP connection
@@ -66,26 +70,26 @@ $pixel_matrix = array(array());
 
 for ($i = 0; $i < SCREEN_HEIGHT; $i++)
 {
-	for ($j = 0; $j < SCREEN_WIDTH; $j++)
-	{
-		$pixel_matrix[$i][$j] = false;
-	}
+    for ($j = 0; $j < SCREEN_WIDTH; $j++)
+    {
+        $pixel_matrix[$i][$j] = false;
+    }
 }
 
 # Draw check pattern
 for ($w = 0; $w < SCREEN_WIDTH; $w++)
 {
-	for ($h = 0; $h < SCREEN_HEIGHT; $h++)
-	{
-		if ($w/5 % 2 == 0)
-		{
-			$pixel_matrix[$h][$w] = true;
-		}
-		if ($h/5 % 2 == 0)
-		{
-			$pixel_matrix[$h][$w] = true;
-		}
-	}
+    for ($h = 0; $h < SCREEN_HEIGHT; $h++)
+    {
+        if ($w/5 % 2 == 0)
+        {
+            $pixel_matrix[$h][$w] = true;
+        }
+        if ($h/5 % 2 == 0)
+        {
+            $pixel_matrix[$h][$w] = true;
+        }
+    }
 }
 
 drawMatrix($oled,$pixel_matrix);

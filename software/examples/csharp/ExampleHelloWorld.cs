@@ -1,3 +1,4 @@
+using System;
 using Tinkerforge;
 
 class Example
@@ -20,8 +21,8 @@ class Example
 		// Write "Hello World" starting from upper left corner of the screen
 		oled.WriteLine(0, 0, "Hello World");
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

@@ -32,9 +32,11 @@ class Example
 						page |= (byte)(1 << k);
 					}
 				}
+
 				column[i][j] = page;
 			}
 		}
+
 		oled.NewWindow(0, (byte)(SCREEN_WIDTH-1), 0, 7);
 
 		int l = 0;
@@ -46,13 +48,16 @@ class Example
 				columnWrite[l] = column[i][j];
 				l++;
 			}
+
 			oled.Write(columnWrite);
+
 			l = 0;
 			for (int k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++)
 			{
 				columnWrite[l] = column[i][k];
 				l++;
 			}
+
 			oled.Write(columnWrite);
 		}
 	}
@@ -96,10 +101,11 @@ class Example
 				}
 			}
 		}
+
 		DrawMatrix(oled, pixelMatrix);
 
-		System.Console.WriteLine("Press enter to exit");
-		System.Console.ReadLine();
+		Console.WriteLine("Press enter to exit");
+		Console.ReadLine();
 		ipcon.Disconnect();
 	}
 }

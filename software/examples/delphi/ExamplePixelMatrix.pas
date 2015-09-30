@@ -16,8 +16,8 @@ type
   private
     ipcon: TIPConnection;
     oled: TBrickletOLED128x64;
-    procedure DrawMatrix(pixels: TPixelMatrix);
   public
+    procedure DrawMatrix(pixels: TPixelMatrix);
     procedure Execute;
   end;
 
@@ -34,12 +34,10 @@ var
   i, j, k, l: integer;
   page: byte;
   column: array[0..7, 0..(SCREEN_WIDTH - 1)] of byte;
-  column_write : array[0..63] of byte;
+  column_write: array[0..63] of byte;
 begin
-  for i := 0 to 7 do
-  begin
-    for j := 0 to SCREEN_WIDTH - 1 do
-    begin
+  for i := 0 to 7 do begin
+    for j := 0 to SCREEN_WIDTH - 1 do begin
       page := 0;
       for k := 0 to 7 do begin
         if (pixels[(i*8) + k, j]) then begin
@@ -50,25 +48,26 @@ begin
       column[i][j] := page;
     end;
   end;
+
   oled.NewWindow(0, SCREEN_WIDTH - 1, 0, 7);
 
-  for i := 0 to 7 do
-  begin
+  for i := 0 to 7 do begin
     l := 0;
-    for j := 0 to Floor(SCREEN_WIDTH/2) - 1 do
-    begin
+    for j := 0 to Floor(SCREEN_WIDTH/2) - 1 do begin
       column_write[l] := column[i, j];
       l := l + 1;
     end;
+
     oled.Write(column_write);
+
     l := 0;
-    for k := Floor(SCREEN_WIDTH/2) to SCREEN_WIDTH - 1 do
-    begin
+    for k := Floor(SCREEN_WIDTH/2) to SCREEN_WIDTH - 1 do begin
       column_write[l] := column[i, k];
       l := l + 1;
     end;
+
     oled.Write(column_write);
-    end;
+  end;
 end;
 
 procedure TExample.Execute;

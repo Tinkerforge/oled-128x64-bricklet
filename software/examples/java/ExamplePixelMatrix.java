@@ -14,45 +14,43 @@ public class ExamplePixelMatrix {
 		short page = 0;
 		short i, j, k, l = 0;
 
-		for (i = 0; i < SCREEN_HEIGHT/8; i++)
-		{
-			for (j = 0; j < SCREEN_WIDTH; j++)
-			{
+		for (i = 0; i < SCREEN_HEIGHT/8; i++) {
+			for (j = 0; j < SCREEN_WIDTH; j++) {
 				page = 0;
 
-				for (k = 0; k < 8; k++)
-				{
-					if (pixels[(i*8)+k][j] == true)
-					{
+				for (k = 0; k < 8; k++) {
+					if (pixels[(i*8)+k][j]) {
 						page |= (short)(1 << k);
 					}
 				}
+
 				column[i][j] = page;
 			}
 		}
 
 		oled.newWindow((short)0, (short)(SCREEN_WIDTH-1), (short)0, (short)7);
 
-		for (i = 0; i < SCREEN_HEIGHT/8; i++)
-		{
+		for (i = 0; i < SCREEN_HEIGHT/8; i++) {
 			l = 0;
-			for (j = 0; j < SCREEN_WIDTH/2; j++)
-			{
+			for (j = 0; j < SCREEN_WIDTH/2; j++) {
 				columnWrite[l] = column[i][j];
 				l++;
 			}
+
 			oled.write(columnWrite);
+
 			l = 0;
-			for (k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++)
-			{
+			for (k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++) {
 				columnWrite[l] = column[i][k];
 				l++;
 			}
+
 			oled.write(columnWrite);
 		}
 	}
-	// Note: To make the example code cleaner we do not handle exceptions. Exceptions you
-	//       might normally want to catch are described in the documentation
+
+	// Note: To make the example code cleaner we do not handle exceptions. Exceptions
+	//       you might normally want to catch are described in the documentation
 	public static void main(String args[]) throws Exception {
 		IPConnection ipcon = new IPConnection(); // Create IP connection
 		BrickletOLED128x64 oled = new BrickletOLED128x64(UID, ipcon); // Create device object

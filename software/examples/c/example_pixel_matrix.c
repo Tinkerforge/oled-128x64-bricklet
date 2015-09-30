@@ -39,12 +39,15 @@ void draw_matrix(OLED128x64 *oled, bool (*pixels)[SCREEN_WIDTH]) {
 			column_write[l] = column[i][j];
 			l++;
 		}
+
 		oled_128x64_write(oled, column_write);
+
 		l = 0;
 		for (k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++) {
 			column_write[l] = column[i][k];
 			l++;
 		}
+
 		oled_128x64_write(oled, column_write);
 	}
 }

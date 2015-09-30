@@ -1,3 +1,4 @@
+Imports System
 Imports Math
 Imports Tinkerforge
 
@@ -33,12 +34,15 @@ Module ExamplePixelMatrix
                 column_write(l) = column(i)(j)
                 l = l + 1
             Next j
+
             oled.Write(column_write)
+
             l = 0
             For k As Integer = SCREEN_WIDTH/2 To SCREEN_WIDTH - 1
                 column_write(l) = column(i)(k)
                 l = l + 1
             Next k
+
             oled.Write(column_write)
         Next i
     End Sub
@@ -55,6 +59,7 @@ Module ExamplePixelMatrix
 
         ' Pixel matrix with all pixels turned off
         Dim pixelMatrix()() As Boolean = New Boolean(SCREEN_HEIGHT)() {}
+
         For i As Integer = 0 To SCREEN_HEIGHT - 1
             pixelMatrix(i) = New Boolean(SCREEN_WIDTH) {}
             For j As Integer = 0 To SCREEN_WIDTH - 1
@@ -72,8 +77,8 @@ Module ExamplePixelMatrix
 
         DrawMatrix(oled, pixelMatrix)
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

@@ -17,6 +17,6 @@ function octave_example_hello_world()
     % Write "Hello World" starting from upper left corner of the screen
     oled.writeLine(0, 0, "Hello World");
 
-    input("Press any key to exit...\n", "s");
+    input("Press key to exit\n", "s");
     ipcon.disconnect();
 end

@@ -19,6 +19,6 @@ $oled->clear_display();
 # Write "Hello World" starting from upper left corner of the screen
 $oled->write_line(0, 0, "Hello World");
 
-print "Press any key to exit...\n";
+print "Press key to exit\n";
 <STDIN>;
 $ipcon->disconnect();

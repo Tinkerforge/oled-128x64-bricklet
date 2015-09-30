@@ -1,3 +1,4 @@
+Imports System
 Imports Tinkerforge
 
 Module ExampleHelloWorld
@@ -18,8 +19,8 @@ Module ExampleHelloWorld
         ' Write "Hello World" starting from upper left corner of the screen
         oled.WriteLine(0, 0, "Hello World")
 
-        System.Console.WriteLine("Press key to exit")
-        System.Console.ReadLine()
+        Console.WriteLine("Press key to exit")
+        Console.ReadLine()
         ipcon.Disconnect()
     End Sub
 End Module

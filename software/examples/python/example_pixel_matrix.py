@@ -56,5 +56,5 @@ if __name__ == "__main__":
 
     draw_matrix(pixel_matrix)
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    raw_input("Press key to exit\n") # Use input() in Python 3
     ipcon.disconnect()
