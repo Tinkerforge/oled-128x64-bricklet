@@ -7,7 +7,7 @@ function matlab_example_hello_world()
     UID = 'XYZ'; % Change to your UID
 
     ipcon = IPConnection(); % Create IP connection
-    oled = BrickletOLED128x64(UID, ipcon); % Create device object
+    oled = handle(BrickletOLED128x64(UID, ipcon), 'CallbackProperties'); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
