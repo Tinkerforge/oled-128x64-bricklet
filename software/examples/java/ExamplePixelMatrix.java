@@ -12,7 +12,7 @@ public class ExamplePixelMatrix {
 		short[][] column = new short[SCREEN_HEIGHT/8][SCREEN_WIDTH];
 		short[] columnWrite = new short[64];
 		short page = 0;
-		short i, j, k, l = 0;
+		short i, j, k, l;
 
 		for (i = 0; i < SCREEN_HEIGHT/8; i++) {
 			for (j = 0; j < SCREEN_WIDTH; j++) {
@@ -61,24 +61,12 @@ public class ExamplePixelMatrix {
 		// Clear display
 		oled.clearDisplay();
 
+		// Draw checkerboard pattern
 		boolean[][] pixelMatrix = new boolean[SCREEN_HEIGHT][SCREEN_WIDTH];
 
-		// Pixel matrix with all pixels turned off
-		for (short i = 0; i < SCREEN_HEIGHT; i++) {
-			for (short j = 0; j < SCREEN_WIDTH; j++) {
-				pixelMatrix[i][j] = false;
-			}
-		}
-
-		// Draw check pattern
-		for (short w = 0; w < SCREEN_WIDTH; w++) {
-			for (short h = 0; h < SCREEN_HEIGHT; h++) {
-				if (w/5 % 2 == 0) {
-					pixelMatrix[h][w] = true;
-				}
-				if (h/5 % 2 == 0) {
-					pixelMatrix[h][w] = true;
-				}
+		for (short h = 0; h < SCREEN_HEIGHT; h++) {
+			for (short w = 0; w < SCREEN_WIDTH; w++) {
+				pixelMatrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
 			}
 		}
 

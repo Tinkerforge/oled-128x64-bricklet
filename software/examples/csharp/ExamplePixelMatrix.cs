@@ -73,32 +73,16 @@ class Example
 		// Clear display
 		oled.ClearDisplay();
 
-		// Pixel matrix with all pixels turned off
+		// Draw checkerboard pattern
 		bool[][] pixelMatrix = new bool[SCREEN_HEIGHT][];
 
-		for (int i = 0; i < SCREEN_HEIGHT; i++)
+		for (int h = 0; h < SCREEN_HEIGHT; h++)
 		{
-			pixelMatrix[i] = new bool[SCREEN_WIDTH];
+			pixelMatrix[h] = new bool[SCREEN_WIDTH];
 
-			for (int j = 0; j < SCREEN_WIDTH; j++)
+			for (int w = 0; w < SCREEN_WIDTH; w++)
 			{
-				pixelMatrix[i][j] = false;
-			}
-		}
-
-		// Draw check pattern
-		for (int w = 0; w < SCREEN_WIDTH; w++)
-		{
-			for (int h = 0; h < SCREEN_HEIGHT; h++)
-			{
-				if (w/5 % 2 == 0)
-				{
-					pixelMatrix[h][w] = true;
-				}
-				if (h/5 % 2 == 0)
-				{
-					pixelMatrix[h][w] = true;
-				}
+				pixelMatrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
 			}
 		}
 

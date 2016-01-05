@@ -65,34 +65,18 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Clear display
 $oled->clearDisplay();
 
-// Pixel matrix with all pixels turned off
+// Draw checkerboard pattern
 $pixel_matrix = array(array());
 
-for ($i = 0; $i < SCREEN_HEIGHT; $i++)
+for ($h = 0; $h < SCREEN_HEIGHT; $h++)
 {
-    for ($j = 0; $j < SCREEN_WIDTH; $j++)
+    for ($w = 0; $w < SCREEN_WIDTH; $w++)
     {
-        $pixel_matrix[$i][$j] = false;
+        $pixel_matrix[$h][$w] = ($h / 8) % 2 == ($w / 8) % 2;
     }
 }
 
-# Draw check pattern
-for ($w = 0; $w < SCREEN_WIDTH; $w++)
-{
-    for ($h = 0; $h < SCREEN_HEIGHT; $h++)
-    {
-        if ($w/5 % 2 == 0)
-        {
-            $pixel_matrix[$h][$w] = true;
-        }
-        if ($h/5 % 2 == 0)
-        {
-            $pixel_matrix[$h][$w] = true;
-        }
-    }
-}
-
-drawMatrix($oled,$pixel_matrix);
+drawMatrix($oled, $pixel_matrix);
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

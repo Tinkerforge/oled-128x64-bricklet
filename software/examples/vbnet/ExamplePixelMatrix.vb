@@ -1,5 +1,5 @@
 Imports System
-Imports Math
+Imports System.Math
 Imports Tinkerforge
 
 Module ExamplePixelMatrix
@@ -57,21 +57,14 @@ Module ExamplePixelMatrix
         ' Clear display
         oled.ClearDisplay()
 
-        ' Pixel matrix with all pixels turned off
+        ' Draw checkerboard pattern
         Dim pixelMatrix()() As Boolean = New Boolean(SCREEN_HEIGHT)() {}
 
-        For i As Integer = 0 To SCREEN_HEIGHT - 1
-            pixelMatrix(i) = New Boolean(SCREEN_WIDTH) {}
-            For j As Integer = 0 To SCREEN_WIDTH - 1
-                pixelMatrix(i)(j) = False
-            Next j
-        Next i
+        For h As Integer = 0 To SCREEN_HEIGHT - 1
+            pixelMatrix(h) = New Boolean(SCREEN_WIDTH) {}
 
-        ' Draw check pattern
-        For w As Integer = 0 To SCREEN_WIDTH - 1
-            For h As Integer = 0 To SCREEN_HEIGHT - 1
-                If Math.Floor((w/5)) Mod 2 = 0 Then pixelMatrix(h)(w) = True
-                If Math.Floor((h/5)) Mod 2 = 0 Then pixelMatrix(h)(w) = True
+            For w As Integer = 0 To SCREEN_WIDTH - 1
+                pixelMatrix(h)(w) = Math.Floor(h / 8) Mod 2 = Math.Floor(w / 8) Mod 2
             Next h
         Next w
 

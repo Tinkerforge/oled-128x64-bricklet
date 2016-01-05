@@ -62,26 +62,14 @@ ipcon.connect HOST, PORT # Connect to brickd
 # Clear display
 oled.clear_display
 
-# Pixel matrix with all pixels turned off
+# Draw checkerboard pattern
 pixel_matrix = []
 
-for i in 0..SCREEN_HEIGHT-1
+for h in 0..SCREEN_HEIGHT-1
   pixel_matrix[i] = []
 
-  for j in 0..SCREEN_WIDTH-1
-    pixel_matrix[i][j] = false
-  end
-end
-
-# Draw check pattern
-for w in 0..SCREEN_WIDTH-1
-  for h in 0..SCREEN_HEIGHT-1
-    if w/5 % 2 == 0
-      pixel_matrix[h][w] = true
-    end
-    if h/5 % 2 == 0
-      pixel_matrix[h][w] = true
-    end
+  for w in 0..SCREEN_WIDTH-1
+    pixel_matrix[h][w] = (h / 8) % 2 == (w / 8) % 2
   end
 end
 

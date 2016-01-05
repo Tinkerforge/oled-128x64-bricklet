@@ -88,22 +88,10 @@ begin
   { Clear display }
   oled.ClearDisplay;
 
-  { Pixel matrix with all pixels turned off }
+  { Draw checkerboard pattern }
   for h := 0 to SCREEN_HEIGHT - 1 do begin
     for w := 0 to SCREEN_WIDTH - 1 do begin
-      pixel_matrix[h, w] := false;
-    end;
-  end;
-
-  { Draw check pattern }
-  for w := 0 to SCREEN_WIDTH - 1 do begin
-    for h := 0 to SCREEN_HEIGHT - 1 do begin
-      if (Floor(w/5) mod 2 = 0) then begin
-        pixel_matrix[h, w] := true;
-      end;
-      if (Floor(h/5) mod 2 = 0) then begin
-        pixel_matrix[h, w] := true;
-      end;
+      pixel_matrix[h, w] := (h div 8) mod 2 = (w div 8) mod 2;
     end;
   end;
 

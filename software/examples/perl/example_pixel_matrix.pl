@@ -70,28 +70,12 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 # Clear display
 $oled->clear_display();
 
-# Pixel matrix with all pixels turned off
+# Draw checkerboard pattern
 my @pixel_matrix=();
-foreach my $i (0..&SCREEN_HEIGHT-1)
-{
-    $pixel_matrix[$i] = ();
-    foreach my $j (0..&SCREEN_WIDTH)
-    {
-        $pixel_matrix[$i][$j] = 0;
-    }
-}
-
-# Draw check pattern
-foreach my $w (0..&SCREEN_WIDTH-1)
-{
-    foreach my $h (0..&SCREEN_HEIGHT-1)
-    {
-        if ((($w/5) % 2) == 0) {
-            $pixel_matrix[$h][$w] = 1;
-        }
-        if ((($h/5) % 2) == 0) {
-            $pixel_matrix[$h][$w] = 1;
-        }
+foreach my $h (0..&SCREEN_HEIGHT-1) {
+    $pixel_matrix[$h] = ();
+    foreach my $w (0..&SCREEN_WIDTH-1) {
+        $pixel_matrix[$h][$w] = (($h / 8) % 2) == (($w / 8) % 2);
     }
 }
 

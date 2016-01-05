@@ -64,25 +64,12 @@ ipcon.on(Tinkerforge.IPConnection.CALLBACK_CONNECTED,
         // Clear display
         oled.clearDisplay();
 
-        // Pixel matrix with all pixels turned off
+        // Draw checkerboard pattern
         var pixelMatrix = [];
-
-        for(var i = 0; i < SCREEN_HEIGHT; i++) {
-            pixelMatrix[i] = [];
-            for(var j = 0; j < SCREEN_WIDTH; j++) {
-                pixelMatrix[i][j] = false;
-            }
-        }
-
-        // Draw check pattern
-        for (var w = 0; w < SCREEN_WIDTH; w++) {
-            for (var h = 0; h < SCREEN_HEIGHT; h++) {
-                if (Math.floor(w/5) % 2 == 0) {
-                    pixelMatrix[h][w] = true;
-                }
-                if (Math.floor(h/5) % 2 == 0) {
-                    pixelMatrix[h][w] = true;
-                }
+        for (var h = 0; h < SCREEN_HEIGHT; h++) {
+            pixelMatrix[h] = [];
+            for (var w = 0; w < SCREEN_WIDTH; w++) {
+                pixelMatrix[h][w] = Math.floor(h / 8) % 2 == Math.floor(w / 8) % 2;
             }
         }
 

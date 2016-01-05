@@ -56,18 +56,12 @@ function octave_example_pixel_matrix()
     % Clear display
     oled.clearDisplay();
 
-    % Boolean matrix with all pixels turned off
+    % Draw checkerboard pattern
     pixel_matrix = false(SCREEN_HEIGHT, SCREEN_WIDTH);
 
-    % Draw check pattern
-    for w = 1:SCREEN_WIDTH
-        for h = 1:SCREEN_HEIGHT
-            if mod(floor(w/5), 2) == 0
-                pixel_matrix(h, w) = true;
-            end
-            if mod(floor(h/5), 2) == 0
-                pixel_matrix(h, w) = true;
-            end
+    for h = 1:SCREEN_HEIGHT
+        for w = 1:SCREEN_WIDTH
+            pixel_matrix(h, w) = mod(floor(h / 8), 2) == mod(floor(w / 8), 2);
         end
     end
 

@@ -74,30 +74,14 @@ function draw_matrix {
 # Clear display
 tinkerforge call oled-128x64-bricklet $uid clear-display
 
-# Pixel matrix with all pixels turned off
+# Draw checkerboard pattern
 declare -A pixel_matrix
 
 for ((h=0;h<${SCREEN_HEIGHT};h++))
 do
 	for ((w=0;w<${SCREEN_WIDTH};w++))
 	do
-		pixel_matrix[${h},${w}]=0
-	done
-done
-
-# Draw check pattern
-for ((w=0; w<${SCREEN_WIDTH}; w++))
-do
-	for ((h=0; h<${SCREEN_HEIGHT}; h++))
-	do
-		if !((((${w}/5))%2))
-		then
-			pixel_matrix[${h},${w}]=1
-		fi
-		if !((((${h}/5))%2))
-		then
-			pixel_matrix[${h},${w}]=1
-		fi
+		pixel_matrix[${h},${w}]=$((((${h}/8))%2==((${w}/8))%2))
 	done
 done
 

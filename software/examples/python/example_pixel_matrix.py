@@ -42,17 +42,12 @@ if __name__ == "__main__":
 
     # Clear display
     oled.clear_display()
-    
-    # Boolean matrix with all pixels turned off
-    pixel_matrix = [[False]*SCREEN_WIDTH for i in range(SCREEN_HEIGHT)]
 
-    # Draw check pattern
-    for w in range(SCREEN_WIDTH):
-        for h in range(SCREEN_HEIGHT):
-            if w//5 % 2 == 0:
-                pixel_matrix[h][w] = True
-            if h//5 % 2 == 0:
-                pixel_matrix[h][w] = True
+    # Draw checkerboard pattern
+    pixel_matrix = [[False]*SCREEN_WIDTH for i in range(SCREEN_HEIGHT)]
+    for h in range(SCREEN_HEIGHT):
+        for w in range(SCREEN_WIDTH):
+            pixel_matrix[h][w] = (h // 8) % 2 == (w // 8) % 2
 
     draw_matrix(pixel_matrix)
 
