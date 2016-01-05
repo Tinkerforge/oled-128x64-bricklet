@@ -1,0 +1,47 @@
+Needs["NETLink`"]
+LoadNETAssembly["Tinkerforge",NotebookDirectory[]<>"../../.."]
+
+host="localhost"
+port=4223
+uid="XYZ"(*Change to your UID*)
+width=128
+height=64
+
+DrawMatrix[oled_,pixels_]:=
+ Module[{pages,row,column,bit,page},
+  pages=Table[0,{y,0,height/8-1},{y,0,width-1}];
+  For[row=0,row<Floor[height/8],row++,
+   For[column=0,column<width,column++,
+    page=0;
+    For[bit=0,bit<8,bit++,
+     If[pixels[[row*8+bit+1]][[column+1]],
+      page=BitOr[page,BitShiftLeft[1,bit]]
+     ]
+    ];
+    pages[[row+1]][[column+1]]=page
+   ]
+  ];
+  oled@NewWindow[0,width-1,0,Floor[height/8]-1];
+  For[row=0,row<Floor[height/8],row++,
+   For[column=0,column<width,column+=64,
+    oled@Write[pages[[row+1]][[column+1;;column+64]]]
+   ]
+  ]
+ ]
+
+(*Create IPConnection and device object*)
+ipcon=NETNew["Tinkerforge.IPConnection"]
+oled=NETNew["Tinkerforge.BrickletOLED128x64",uid,ipcon]
+ipcon@Connect[host,port]
+
+(*Clear display*)
+oled@ClearDisplay[]
+
+(*Draw checkerboard pattern*)
+pixels=Table[Mod[Floor[h/8],2]==Mod[Floor[w/8],2],{h,0,height-1},{w,0,width-1}];
+DrawMatrix[oled,pixels]
+
+(*Clean up*)
+ipcon@Disconnect[]
+ReleaseNETObject[oled]
+ReleaseNETObject[ipcon]
