@@ -13,14 +13,14 @@ Module ExamplePixelMatrix
         Dim column()() As Byte = New Byte(SCREEN_HEIGHT/8)() {}
         Dim column_write() As Byte = New Byte(64) {}
         Dim page As Byte
-        Dim l as Byte
+        Dim l as Integer
 
         For i As Integer = 0 To (SCREEN_HEIGHT/8) - 1
             column(i) = New Byte(SCREEN_WIDTH) {}
             For j As Integer = 0 To SCREEN_WIDTH - 1
                 page = 0
                 For k As Integer = 0 To 7
-                    If pixels((i*8) + k)(j) = True Then page = page Or (1 << k)
+                    If pixels((i*8) + k)(j) = True Then page = page Or Convert.ToByte(1 << k)
                 Next k
                 column(i)(j) = page
             Next j
