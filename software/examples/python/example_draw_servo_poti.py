@@ -5,16 +5,14 @@
 # This example uses a Servo Brick, a Rotary Poti Bricklet and
 # a OLED 128x64 Bricklet.
 #
-# The position of the poti Brick is drawn on the OLED display 
-# (as text, as a bar graph and as a dial indicator). 
-# At the same time the servo moves to an angle that is
-# equivalent of the position of the roatry poti.
+# The position of the Rotary Poti Bricklet is drawn on the OLED
+# display (as text, as a bar graph and as a dial indicator).
+# At the same time the servo moves to an angle that is equivalent
+# of the position of the Rotary Poti Bricklet.
 #
-
 
 HOST = "localhost"
 PORT = 4223
-
 SCREEN_WIDTH = 128
 SCREEN_HEIGHT = 64
 
@@ -66,7 +64,7 @@ if __name__ == "__main__":
     servo = BrickServo('6e8MF1', ipcon)
 
     # Connect to brickd
-    ipcon.connect(HOST, PORT) 
+    ipcon.connect(HOST, PORT)
 
     # Configure Servo so that it rotates 180°
     servo.set_pulse_width(6, 650, 2350)
