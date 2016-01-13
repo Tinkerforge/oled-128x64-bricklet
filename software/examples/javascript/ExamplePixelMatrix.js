@@ -22,7 +22,7 @@ function drawMatrix(oled, pixels) {
             page = 0;
 
             for (var k = 0; k < 8; k++) {
-                if (pixels[i*8 + k][j] == true) {
+                if (pixels[i*8 + k][j]) {
                     page |= 1 << k;
                 }
             }
