@@ -4,7 +4,7 @@ var getPixels = require('get-pixels');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = '7xwQ9g'; // Change to your UID
+var UID = 'XYZ'; // Change to your UID
 var WIDTH = 128;
 var HEIGHT = 64;
 
