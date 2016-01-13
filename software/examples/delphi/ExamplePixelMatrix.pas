@@ -7,73 +7,51 @@ uses
   Math, SysUtils, IPConnection, BrickletOLED128x64;
 
 const
-  SCREEN_WIDTH = 128;
-  SCREEN_HEIGHT = 64;
+  WIDTH = 128;
+  HEIGHT = 64;
 
 type
-  TPixelMatrix = array[0..(SCREEN_HEIGHT - 1), 0..(SCREEN_WIDTH - 1)] of boolean;
+  TPixels = array[0..(HEIGHT - 1), 0..(WIDTH - 1)] of boolean;
   TExample = class
   private
     ipcon: TIPConnection;
     oled: TBrickletOLED128x64;
   public
-    procedure DrawMatrix(pixels: TPixelMatrix);
+    procedure DrawMatrix(pixels: TPixels);
     procedure Execute;
   end;
 
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'XYZ'; { Change to your UID }
+  UID = 'abc'; { Change to your UID }
 
 var
   e: TExample;
 
-procedure TExample.DrawMatrix(pixels: TPixelMatrix);
-var
-  i, j, k, l: integer;
-  page: byte;
-  column: array[0..7, 0..(SCREEN_WIDTH - 1)] of byte;
-  column_write: array[0..63] of byte;
+procedure TExample.DrawMatrix(pixels: TPixels);
+var row, column, bit: integer; pages: array[0..(HEIGHT div 8 - 1), 0..(WIDTH - 1)] of byte;
 begin
-  for i := 0 to 7 do begin
-    for j := 0 to SCREEN_WIDTH - 1 do begin
-      page := 0;
-      for k := 0 to 7 do begin
-        if (pixels[(i*8) + k, j]) then begin
-          page := page or (1 << k);
+  for row := 0 to HEIGHT div 8 - 1 do begin
+    for column := 0 to WIDTH - 1 do begin
+      pages[row][column] := 0;
+      for bit := 0 to 7 do begin
+        if (pixels[(row * 8) + bit, column]) then begin
+          pages[row][column] := pages[row][column] or (1 << bit);
         end;
       end;
-
-      column[i][j] := page;
     end;
   end;
-
-  oled.NewWindow(0, SCREEN_WIDTH - 1, 0, 7);
-
-  for i := 0 to 7 do begin
-    l := 0;
-    for j := 0 to Floor(SCREEN_WIDTH/2) - 1 do begin
-      column_write[l] := column[i, j];
-      l := l + 1;
+  oled.NewWindow(0, WIDTH - 1, 0, HEIGHT div 8 - 1);
+  for row := 0 to HEIGHT div 8 - 1 do begin
+    for column := 0 to WIDTH - 1 do begin
+      oled.write(Copy(pages[row], column + 1, 64));
     end;
-
-    oled.Write(column_write);
-
-    l := 0;
-    for k := Floor(SCREEN_WIDTH/2) to SCREEN_WIDTH - 1 do begin
-      column_write[l] := column[i, k];
-      l := l + 1;
-    end;
-
-    oled.Write(column_write);
   end;
 end;
 
 procedure TExample.Execute;
-var
-  pixel_matrix: TPixelMatrix;
-  w, h: integer;
+var row, column: integer; pixels: TPixels;
 begin
   { Create IP connection }
   ipcon := TIPConnection.Create;
@@ -89,13 +67,13 @@ begin
   oled.ClearDisplay;
 
   { Draw checkerboard pattern }
-  for h := 0 to SCREEN_HEIGHT - 1 do begin
-    for w := 0 to SCREEN_WIDTH - 1 do begin
-      pixel_matrix[h, w] := (h div 8) mod 2 = (w div 8) mod 2;
+  for row := 0 to HEIGHT - 1 do begin
+    for column := 0 to WIDTH - 1 do begin
+      pixels[row, column] := (row div 8) mod 2 = (column div 8) mod 2;
     end;
   end;
 
-  e.DrawMatrix(pixel_matrix);
+  e.DrawMatrix(pixels);
 
   WriteLn('Press key to exit');
   ReadLn;

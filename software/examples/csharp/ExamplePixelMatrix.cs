@@ -6,59 +6,41 @@ class Example
 	private static string HOST = "localhost";
 	private static int PORT = 4223;
 	private static string UID = "XYZ"; // Change to your UID
-	private static int SCREEN_WIDTH = 128;
-	private static int SCREEN_HEIGHT = 64;
+	private static int WIDTH = 128;
+	private static int HEIGHT = 64;
 
 	private static void DrawMatrix(BrickletOLED128x64 oled, bool[][] pixels)
 	{
-		byte[][] column = new byte[SCREEN_HEIGHT/8][];
-		byte[] columnWrite = new byte[64];
+		byte[][] pages = new byte[HEIGHT / 8][];
 
-		for (int i = 0; i < SCREEN_HEIGHT/8; i++)
+		for (int row = 0; row < HEIGHT / 8; row++)
 		{
-			column[i] = new byte[SCREEN_WIDTH];
-		}
+			pages[row] = new byte[WIDTH];
 
-		for (int i = 0; i < SCREEN_HEIGHT/8; i++)
-		{
-			for (int j = 0; j < SCREEN_WIDTH; j++)
+			for (int column = 0; column < WIDTH; column++)
 			{
-				byte page = 0;
+				pages[row][column] = 0;
 
-				for (int k = 0; k < 8; k++)
+				for (int bit = 0; bit < 8; bit++)
 				{
-					if (pixels[(i*8)+k][j] == true)
+					if (pixels[(row * 8) + bit][column])
 					{
-						page |= (byte)(1 << k);
+						pages[row][column] |= (byte)(1 << bit);
 					}
 				}
-
-				column[i][j] = page;
 			}
 		}
 
-		oled.NewWindow(0, (byte)(SCREEN_WIDTH-1), 0, 7);
+		oled.NewWindow(0, (byte)(WIDTH - 1), 0, (byte)(HEIGHT / 8 - 1));
 
-		int l = 0;
-		for (int i = 0; i < SCREEN_HEIGHT/8; i++)
+		byte[] section = new byte[64];
+
+		for (int row = 0; row < HEIGHT / 8; row++)
 		{
-			l = 0;
-			for (int j = 0; j < SCREEN_WIDTH/2; j++)
-			{
-				columnWrite[l] = column[i][j];
-				l++;
+			for (int column = 0; column < WIDTH; column += 64) {
+				Array.Copy(pages[row], column, section, 0, 64);
+				oled.Write(section);
 			}
-
-			oled.Write(columnWrite);
-
-			l = 0;
-			for (int k = SCREEN_WIDTH/2; k < SCREEN_WIDTH; k++)
-			{
-				columnWrite[l] = column[i][k];
-				l++;
-			}
-
-			oled.Write(columnWrite);
 		}
 	}
 
@@ -74,19 +56,19 @@ class Example
 		oled.ClearDisplay();
 
 		// Draw checkerboard pattern
-		bool[][] pixelMatrix = new bool[SCREEN_HEIGHT][];
+		bool[][] pixels = new bool[HEIGHT][];
 
-		for (int h = 0; h < SCREEN_HEIGHT; h++)
+		for (int row = 0; row < HEIGHT; row++)
 		{
-			pixelMatrix[h] = new bool[SCREEN_WIDTH];
+			pixels[row] = new bool[WIDTH];
 
-			for (int w = 0; w < SCREEN_WIDTH; w++)
+			for (int column = 0; column < WIDTH; column++)
 			{
-				pixelMatrix[h][w] = (h / 8) % 2 == (w / 8) % 2;
+				pixels[row][column] = (row / 8) % 2 == (column / 8) % 2;
 			}
 		}
 
-		DrawMatrix(oled, pixelMatrix);
+		DrawMatrix(oled, pixels);
 
 		Console.WriteLine("Press enter to exit");
 		Console.ReadLine();
