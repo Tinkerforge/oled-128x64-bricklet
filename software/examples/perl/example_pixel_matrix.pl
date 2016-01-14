@@ -6,58 +6,37 @@ use Tinkerforge::BrickletOLED128x64;
 use constant HOST => 'localhost';
 use constant PORT => 4223;
 use constant UID => 'XYZ'; # Change to your UID
-use constant SCREEN_WIDTH => 128;
-use constant SCREEN_HEIGHT => 64;
+use constant WIDTH => 128;
+use constant HEIGHT => 64;
 
 sub draw_matrix
 {
-    my ($oled, $ref_pixel_matrix) = @_;
-    my @pixels = @{$ref_pixel_matrix};
-    my @column = ();
-    my @column_write = ();
-    my $page = 0;
-    my $l = 0;
+    my ($oled, $pixels_ref) = @_;
+    my @pixels = @{$pixels_ref};
+    my @pages = ();
 
-    foreach my $i (0..SCREEN_HEIGHT/8 - 1)
-    {
-        $column[$i] = ();
-        foreach my $j (0..SCREEN_WIDTH - 1)
-        {
-            $page = 0;
+    foreach my $row (0..&HEIGHT / 8 - 1) {
+        $pages[$row] = ();
 
-            foreach my $k (0..7)
-            {
-                if ($pixels[($i*8) + $k][$j])
-                {
-                    $page |= 1 << $k;
+        foreach my $column (0..&WIDTH - 1) {
+            $pages[$row][$column] = 0;
+
+            foreach my $bit (0..7) {
+                if ($pixels[($row * 8) + $bit][$column]) {
+                    $pages[$row][$column] |= 1 << $bit;
                 }
             }
-
-            $column[$i][$j] = $page;
         }
     }
 
-    $oled->new_window(0, &SCREEN_WIDTH-1, 0, 7);
+    $oled->new_window(0, &WIDTH - 1, 0, &HEIGHT / 8 - 1);
 
-    foreach my $i (0..SCREEN_HEIGHT/8 - 1)
-    {
-        $l = 0;
-        foreach my $j (0..SCREEN_WIDTH/2 - 1)
-        {
-            $column_write[$l] = $column[$i][$j];
-            $l++;
+    foreach my $row (0..&HEIGHT / 8 - 1) {
+        for (my $column = 0; $column < &WIDTH; $column += 64) {
+            my @section = @{$pages[$row]}[$column..$column + 64];
+
+            $oled->write(\@section);
         }
-
-        $oled->write(\@column_write);
-
-        $l = 0;
-        foreach my $k (SCREEN_WIDTH/2..SCREEN_WIDTH - 1)
-        {
-            $column_write[$l] = $column[$i][$k];
-            $l++;
-        }
-
-        $oled->write(\@column_write);
     }
 }
 
@@ -71,15 +50,17 @@ $ipcon->connect(&HOST, &PORT); # Connect to brickd
 $oled->clear_display();
 
 # Draw checkerboard pattern
-my @pixel_matrix=();
-foreach my $h (0..&SCREEN_HEIGHT-1) {
-    $pixel_matrix[$h] = ();
-    foreach my $w (0..&SCREEN_WIDTH-1) {
-        $pixel_matrix[$h][$w] = (($h / 8) % 2) == (($w / 8) % 2);
+my @pixels = ();
+
+foreach my $row (0..&HEIGHT - 1) {
+    $pixels[$row] = ();
+
+    foreach my $column (0..&WIDTH - 1) {
+        $pixels[$row][$column] = (($row / 8) % 2) == (($column / 8) % 2);
     }
 }
 
-draw_matrix($oled, \@pixel_matrix);
+draw_matrix($oled, \@pixels);
 
 print "Press key to exit\n";
 <STDIN>;
