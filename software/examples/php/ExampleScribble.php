@@ -1,5 +1,10 @@
 <?php
 
+if (!extension_loaded('gd')) {
+    echo "Required gd extension is not available\n";
+    exit;
+}
+
 require_once('Tinkerforge/IPConnection.php');
 require_once('Tinkerforge/BrickletOLED128x64.php');
 
@@ -12,7 +17,7 @@ const UID = 'XYZ'; // Change to your UID
 const WIDTH = 128;
 const HEIGHT = 64;
 
-function drawMatrix($oled, $pixels)
+function drawImage($oled, $image)
 {
     $pages = array(array());
 
@@ -24,7 +29,10 @@ function drawMatrix($oled, $pixels)
 
             for ($bit = 0; $bit < 8; $bit++)
             {
-                if ($pixels[($row * 8) + $bit][$column])
+                $index = imagecolorat($image, $column, ($row * 8) + $bit);
+                $rgb = imagecolorsforindex($image, $index);
+
+                if ($rgb['red'] > 0)
                 {
                     $pages[$row][$column] |= 1 << $bit;
                 }
@@ -52,21 +60,30 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 // Clear display
 $oled->clearDisplay();
 
-// Draw checkerboard pattern
-$pixels = array(array());
+// Draw rotating line
+$image = imagecreate(WIDTH, HEIGHT);
+$black = imagecolorallocate($image, 0, 0, 0);
+$white = imagecolorallocate($image, 255, 255, 255);
+$originX = WIDTH / 2;
+$originY = HEIGHT / 2;
+$length = HEIGHT / 2 - 2;
+$angle = 0;
 
-for ($row = 0; $row < HEIGHT; $row++)
+echo "Press ctrl+c to exit\n";
+
+while (true)
 {
-    for ($column = 0; $column < WIDTH; $column++)
-    {
-        $pixels[$row][$column] = ($row / 8) % 2 == ($column / 8) % 2;
-    }
+    $radians = M_PI * $angle / 180.0;
+    $x = (int)($originX + $length * cos($radians));
+    $y = (int)($originY + $length * sin($radians));
+
+    imagefilledrectangle($image, 0, 0, WIDTH, HEIGHT, $black);
+    imageline($image, $originX, $originY, $x, $y, $white);
+
+    drawImage($oled, $image);
+    usleep(25*1000);
+
+    $angle++;
 }
-
-drawMatrix($oled, $pixels);
-
-echo "Press key to exit\n";
-fgetc(fopen('php://stdin', 'r'));
-$ipcon->disconnect();
 
 ?>

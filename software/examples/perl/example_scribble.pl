@@ -56,8 +56,8 @@ $oled->clear_display();
 
 # Draw rotating line
 my $image = new GD::Image(&WIDTH, &HEIGHT);
-my $white = $image->colorAllocate(255, 255, 255);
 my $black = $image->colorAllocate(0, 0, 0);
+my $white = $image->colorAllocate(255, 255, 255);
 my $origin_x = &WIDTH / 2;
 my $origin_y = &HEIGHT / 2;
 my $length = &HEIGHT / 2 - 2;
