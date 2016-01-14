@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 # -*- ruby encoding: utf-8 -*-
 
+require 'rgd'
 require 'tinkerforge/ip_connection'
 require 'tinkerforge/bricklet_oled_128x64'
 
@@ -12,7 +13,7 @@ UID = 'XYZ' # Change to your UID
 WIDTH = 128
 HEIGHT = 64
 
-def draw_matrix(oled, pixels)
+def draw_image(oled, image)
   pages = []
 
   for row in 0..HEIGHT / 8 - 1
@@ -22,7 +23,10 @@ def draw_matrix(oled, pixels)
       pages[row][column] = 0
 
       for bit in 0..7
-        if pixels[row * 8 + bit][column]
+        index = image[column, (row * 8) + bit]
+        rgba = image.rgba index
+
+        if rgba[0] > 0
           pages[row][column] |= 1 << bit
         end
       end
@@ -48,18 +52,31 @@ ipcon.connect HOST, PORT # Connect to brickd
 oled.clear_display
 
 # Draw checkerboard pattern
-pixels = []
-
-for row in 0..HEIGHT - 1
-  pixels[row] = []
-
-  for column in 0..WIDTH - 1
-    pixels[row][column] = (row / 8) % 2 == (column / 8) % 2
-  end
-end
-
-draw_matrix oled, pixels
+image = RGD::Image.create WIDTH, HEIGHT
+black = image.color_allocate 0, 0, 0
+white = image.color_allocate 255, 255, 255
+origin_x = WIDTH / 2
+origin_y = HEIGHT / 2
+length = HEIGHT / 2 - 2
+angle = 0
 
 puts 'Press key to exit'
-$stdin.gets
-ipcon.disconnect
+
+Thread.new do
+  $stdin.gets
+  exit
+end
+
+while true
+    radians = Math::PI * angle / 180.0
+    x = (origin_x + length * Math.cos(radians)).to_i
+    y = (origin_y + length * Math.sin(radians)).to_i
+
+    image.filled_rectangle 0, 0, WIDTH, HEIGHT, black
+    image.line origin_x, origin_y, x, y, white
+
+    draw_image oled, image
+    sleep 0.025
+
+    angle += 1
+end
