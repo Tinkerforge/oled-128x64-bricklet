@@ -1,15 +1,17 @@
 Imports System
+Imports System.Drawing
 Imports System.Math
+Imports System.Threading
 Imports Tinkerforge
 
-Module ExamplePixelMatrix
+Module ExampleScribble
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
     Const UID As String = "XYZ" ' Change to your UID
     Const WIDTH As Integer = 128
     Const HEIGHT As Integer = 64
 
-    Sub DrawMatrix(ByRef oled As BrickletOLED128x64, ByVal pixels()() As Boolean)
+    Sub DrawImage(ByRef oled As BrickletOLED128x64, ByVal bitmap As Bitmap)
         Dim pages()() As Byte = New Byte(HEIGHT / 8)() {}
 
         For row As Integer = 0 To HEIGHT / 8 - 1
@@ -19,7 +21,7 @@ Module ExamplePixelMatrix
                 pages(row)(column) = 0
 
                 For bit As Integer = 0 To 7
-                    If pixels((row * 8) + bit)(column) Then
+                    If bitmap.GetPixel(column, (row * 8) + bit).GetBrightness() > 0 Then
                         pages(row)(column) = pages(row)(column) Or Convert.ToByte(1 << bit)
                     End If
                 Next bit
@@ -48,18 +50,30 @@ Module ExamplePixelMatrix
         ' Clear display
         oled.ClearDisplay()
 
-        ' Draw checkerboard pattern
-        Dim pixels()() As Boolean = New Boolean(HEIGHT)() {}
+        ' Draw rotating line
+        Dim bitmap As New Bitmap(WIDTH, HEIGHT)
+        Dim originX As Integer = WIDTH / 2
+        Dim originY As Integer = HEIGHT / 2
+        Dim length As Integer = HEIGHT / 2 - 2
+        Dim angle As Integer = 0
 
-        For row As Integer = 0 To HEIGHT - 1
-            pixels(row) = New Boolean(WIDTH) {}
+        Console.WriteLine("Press enter to exit")
 
-            For column As Integer = 0 To WIDTH - 1
-                pixels(row)(column) = Math.Floor(row / 8) Mod 2 = Math.Floor(column / 8) Mod 2
-            Next row
-        Next column
+        While Not Console.KeyAvailable
+            Dim radians As Double = Math.PI * angle / 180.0
+            Dim x As Integer = Math.Floor(originX + length * Math.Cos(radians))
+            Dim y As Integer = Math.Floor(originY + length * Math.Sin(radians))
 
-        DrawMatrix(oled, pixels)
+            Using g As Graphics = Graphics.FromImage(bitmap)
+                g.FillRectangle(Brushes.Black, 0, 0, WIDTH, HEIGHT)
+                g.DrawLine(Pens.White, originX, originY, x, y)
+            End Using
+
+            DrawImage(oled, bitmap)
+            Thread.Sleep(25)
+
+            angle += 1
+        End While
 
         Console.WriteLine("Press key to exit")
         Console.ReadLine()
