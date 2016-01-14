@@ -24,13 +24,15 @@ type
 const
   HOST = 'localhost';
   PORT = 4223;
-  UID = 'abc'; { Change to your UID }
+  UID = 'XYZ'; { Change to your UID }
 
 var
   e: TExample;
 
 procedure TExample.DrawMatrix(pixels: TPixels);
-var row, column, bit: integer; pages: array[0..(HEIGHT div 8 - 1), 0..(WIDTH - 1)] of byte;
+var row, column, bit, i: integer;
+    pages: array[0..(HEIGHT div 8 - 1), 0..(WIDTH - 1)] of byte;
+    section: array [0..63] of byte;
 begin
   for row := 0 to HEIGHT div 8 - 1 do begin
     for column := 0 to WIDTH - 1 do begin
@@ -44,8 +46,13 @@ begin
   end;
   oled.NewWindow(0, WIDTH - 1, 0, HEIGHT div 8 - 1);
   for row := 0 to HEIGHT div 8 - 1 do begin
-    for column := 0 to WIDTH - 1 do begin
-      oled.write(Copy(pages[row], column + 1, 64));
+    column := 0;
+    while column < WIDTH - 1 do begin
+      for i := 0 to 63 do begin
+        section[i] := pages[row][column + i];
+      end;
+      oled.write(section);
+      column := column + 64;
     end;
   end;
 end;
