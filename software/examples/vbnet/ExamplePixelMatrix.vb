@@ -10,9 +10,9 @@ Module ExamplePixelMatrix
     Const HEIGHT As Integer = 64
 
     Sub DrawMatrix(ByRef oled As BrickletOLED128x64, ByVal pixels()() As Boolean)
-        Dim pages()() As Byte = New Byte(HEIGHT / 8)() {}
+        Dim pages()() As Byte = New Byte(HEIGHT \ 8)() {}
 
-        For row As Integer = 0 To HEIGHT / 8 - 1
+        For row As Integer = 0 To HEIGHT \ 8 - 1
             pages(row) = New Byte(WIDTH) {}
 
             For column As Integer = 0 To WIDTH - 1
@@ -26,11 +26,11 @@ Module ExamplePixelMatrix
             Next column
         Next row
 
-        oled.NewWindow(0, WIDTH - 1, 0, HEIGHT / 8 - 1)
+        oled.NewWindow(0, WIDTH - 1, 0, HEIGHT \ 8 - 1)
 
         Dim section() As Byte = New Byte(64) {}
 
-        For row As Integer = 0 To HEIGHT / 8 - 1
+        For row As Integer = 0 To HEIGHT \ 8 - 1
             For column As Integer = 0 To WIDTH - 1 Step 64
                 Array.Copy(pages(row), column, section, 0, 64)
                 oled.Write(section)
@@ -55,7 +55,7 @@ Module ExamplePixelMatrix
             pixels(row) = New Boolean(WIDTH) {}
 
             For column As Integer = 0 To WIDTH - 1
-                pixels(row)(column) = Math.Floor(row / 8) Mod 2 = Math.Floor(column / 8) Mod 2
+                pixels(row)(column) = (row \ 8) Mod 2 = (column \ 8) Mod 2
             Next row
         Next column
 

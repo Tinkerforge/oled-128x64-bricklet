@@ -12,9 +12,9 @@ Module ExampleScribble
     Const HEIGHT As Integer = 64
 
     Sub DrawImage(ByRef oled As BrickletOLED128x64, ByVal bitmap As Bitmap)
-        Dim pages()() As Byte = New Byte(HEIGHT / 8)() {}
+        Dim pages()() As Byte = New Byte(HEIGHT \ 8)() {}
 
-        For row As Integer = 0 To HEIGHT / 8 - 1
+        For row As Integer = 0 To HEIGHT \ 8 - 1
             pages(row) = New Byte(WIDTH) {}
 
             For column As Integer = 0 To WIDTH - 1
@@ -28,11 +28,11 @@ Module ExampleScribble
             Next column
         Next row
 
-        oled.NewWindow(0, WIDTH - 1, 0, HEIGHT / 8 - 1)
+        oled.NewWindow(0, WIDTH - 1, 0, HEIGHT \ 8 - 1)
 
         Dim section() As Byte = New Byte(64) {}
 
-        For row As Integer = 0 To HEIGHT / 8 - 1
+        For row As Integer = 0 To HEIGHT \ 8 - 1
             For column As Integer = 0 To WIDTH - 1 Step 64
                 Array.Copy(pages(row), column, section, 0, 64)
                 oled.Write(section)
@@ -52,9 +52,9 @@ Module ExampleScribble
 
         ' Draw rotating line
         Dim bitmap As New Bitmap(WIDTH, HEIGHT)
-        Dim originX As Integer = WIDTH / 2
-        Dim originY As Integer = HEIGHT / 2
-        Dim length As Integer = HEIGHT / 2 - 2
+        Dim originX As Integer = WIDTH \ 2
+        Dim originY As Integer = HEIGHT \ 2
+        Dim length As Integer = HEIGHT \ 2 - 2
         Dim angle As Integer = 0
 
         Console.WriteLine("Press enter to exit")
