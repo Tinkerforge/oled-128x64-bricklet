@@ -30,7 +30,7 @@ sub draw_image
                 my $index = $image->getPixel($column, ($row * 8) + $bit);
                 my @rgb = $image->rgb($index);
 
-                if (@rgb[0] > 0) {
+                if ($rgb[0] > 0) {
                     $pages[$row][$column] |= 1 << $bit;
                 }
             }
