@@ -9,16 +9,17 @@ use Tinkerforge\BrickletOLED128x64;
 const HOST = 'localhost';
 const PORT = 4223;
 const UID = 'XYZ'; // Change to your UID
-const WIDTH = 128;
-const HEIGHT = 64;
+const WIDTH = 128; // Columns (each 1 pixel wide)
+const HEIGHT = 8; // Rows (each 8 pixels high)
 
-function drawMatrix($oled, $pixels)
+function drawMatrix($oled, $startColumn, $startRow, $columnCount, $rowCount, $pixels)
 {
     $pages = array(array());
 
-    for ($row = 0; $row < HEIGHT / 8; $row++)
+    // Convert pixel matrix into 8bit pages
+    for ($row = 0; $row < $rowCount; $row++)
     {
-        for ($column = 0; $column < WIDTH; $column++)
+        for ($column = 0; $column < $columnCount; $column++)
         {
             $pages[$row][$column] = 0;
 
@@ -32,14 +33,25 @@ function drawMatrix($oled, $pixels)
         }
     }
 
-    $oled->newWindow(0, WIDTH - 1, 0, HEIGHT / 8 - 1);
+    // Merge page matrix into single page array
+    $data = array();
 
-    for ($row = 0; $row < HEIGHT / 8; $row++)
+    for ($i = 0, $row = 0; $row < $rowCount; $row++)
     {
-        for ($column = 0; $column < WIDTH; $column += 64)
+        for ($column = 0; $column < $columnCount; $column++, $i++)
         {
-            $oled->write(array_slice($pages[$row], $column, 64));
+            $data[$i] = $pages[$row][$column];
         }
+    }
+
+    // Set new window
+    $oled->newWindow($startColumn, $startColumn + $columnCount - 1,
+                     $startRow, $startRow + $rowCount - 1);
+
+    // Write page data in 64 byte blocks
+    for ($i = 0; $i < count($data); $i += 64)
+    {
+        $oled->write(array_pad(array_slice($data, $i, 64), 64, 0));
     }
 }
 
@@ -55,15 +67,15 @@ $oled->clearDisplay();
 // Draw checkerboard pattern
 $pixels = array(array());
 
-for ($row = 0; $row < HEIGHT; $row++)
+for ($y = 0; $y < HEIGHT * 8; $y++)
 {
-    for ($column = 0; $column < WIDTH; $column++)
+    for ($x = 0; $x < WIDTH; $x++)
     {
-        $pixels[$row][$column] = ($row / 8) % 2 == ($column / 8) % 2;
+        $pixels[$y][$x] = ($y / 8) % 2 == ($x / 8) % 2;
     }
 }
 
-drawMatrix($oled, $pixels);
+drawMatrix($oled, 0, 0, WIDTH, HEIGHT, $pixels);
 
 echo "Press key to exit\n";
 fgetc(fopen('php://stdin', 'r'));

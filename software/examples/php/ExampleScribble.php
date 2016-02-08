@@ -14,16 +14,17 @@ use Tinkerforge\BrickletOLED128x64;
 const HOST = 'localhost';
 const PORT = 4223;
 const UID = 'XYZ'; // Change to your UID
-const WIDTH = 128;
-const HEIGHT = 64;
+const WIDTH = 128; // Columns (each 1 pixel wide)
+const HEIGHT = 8; // Rows (each 8 pixels high)
 
-function drawImage($oled, $image)
+function drawImage($oled, $startColumn, $startRow, $columnCount, $rowCount, $image)
 {
     $pages = array(array());
 
-    for ($row = 0; $row < HEIGHT / 8; $row++)
+    // Convert image pixels into 8bit pages
+    for ($row = 0; $row < $rowCount; $row++)
     {
-        for ($column = 0; $column < WIDTH; $column++)
+        for ($column = 0; $column < $columnCount; $column++)
         {
             $pages[$row][$column] = 0;
 
@@ -32,7 +33,7 @@ function drawImage($oled, $image)
                 $index = imagecolorat($image, $column, ($row * 8) + $bit);
                 $rgb = imagecolorsforindex($image, $index);
 
-                if ($rgb['red'] > 0)
+                if ($rgb['red'] > 0) // Assume a black/white image
                 {
                     $pages[$row][$column] |= 1 << $bit;
                 }
@@ -40,14 +41,25 @@ function drawImage($oled, $image)
         }
     }
 
-    $oled->newWindow(0, WIDTH - 1, 0, HEIGHT / 8 - 1);
+    // Merge page matrix into single page array
+    $data = array();
 
-    for ($row = 0; $row < HEIGHT / 8; $row++)
+    for ($i = 0, $row = 0; $row < $rowCount; $row++)
     {
-        for ($column = 0; $column < WIDTH; $column += 64)
+        for ($column = 0; $column < $columnCount; $column++, $i++)
         {
-            $oled->write(array_slice($pages[$row], $column, 64));
+            $data[$i] = $pages[$row][$column];
         }
+    }
+
+    // Set new window
+    $oled->newWindow($startColumn, $startColumn + $columnCount - 1,
+                     $startRow, $startRow + $rowCount - 1);
+
+    // Write page data in 64 byte blocks
+    for ($i = 0; $i < count($data); $i += 64)
+    {
+        $oled->write(array_pad(array_slice($data, $i, 64), 64, 0));
     }
 }
 
@@ -61,12 +73,12 @@ $ipcon->connect(HOST, PORT); // Connect to brickd
 $oled->clearDisplay();
 
 // Draw rotating line
-$image = imagecreate(WIDTH, HEIGHT);
+$image = imagecreate(WIDTH, HEIGHT * 8);
 $black = imagecolorallocate($image, 0, 0, 0);
 $white = imagecolorallocate($image, 255, 255, 255);
 $originX = WIDTH / 2;
-$originY = HEIGHT / 2;
-$length = HEIGHT / 2 - 2;
+$originY = HEIGHT * 8 / 2;
+$length = HEIGHT * 8 / 2 - 2;
 $angle = 0;
 
 echo "Press ctrl+c to exit\n";
@@ -77,10 +89,10 @@ while (true)
     $x = (int)($originX + $length * cos($radians));
     $y = (int)($originY + $length * sin($radians));
 
-    imagefilledrectangle($image, 0, 0, WIDTH, HEIGHT, $black);
+    imagefilledrectangle($image, 0, 0, WIDTH, HEIGHT * 8, $black);
     imageline($image, $originX, $originY, $x, $y, $white);
 
-    drawImage($oled, $image);
+    drawImage($oled, 0, 0, WIDTH, HEIGHT, $image);
     usleep(25*1000);
 
     $angle++;

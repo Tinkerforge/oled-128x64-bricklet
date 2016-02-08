@@ -1,5 +1,5 @@
 var Tinkerforge = require('tinkerforge');
-var GM = require('gm');
+var GM = require('gm'); // FIXME: maybe use node-gd instead
 var getPixels = require('get-pixels');
 
 var HOST = 'localhost';
