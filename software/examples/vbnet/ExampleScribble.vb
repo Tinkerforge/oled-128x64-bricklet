@@ -61,8 +61,8 @@ Module ExampleScribble
 
         While Not Console.KeyAvailable
             Dim radians As Double = Math.PI * angle / 180.0
-            Dim x As Integer = Math.Floor(originX + length * Math.Cos(radians))
-            Dim y As Integer = Math.Floor(originY + length * Math.Sin(radians))
+            Dim x As Integer = Convert.ToInt32(Math.Floor(originX + length * Math.Cos(radians)))
+            Dim y As Integer = Convert.ToInt32(Math.Floor(originY + length * Math.Sin(radians)))
 
             Using g As Graphics = Graphics.FromImage(bitmap)
                 g.FillRectangle(Brushes.Black, 0, 0, WIDTH, HEIGHT)
