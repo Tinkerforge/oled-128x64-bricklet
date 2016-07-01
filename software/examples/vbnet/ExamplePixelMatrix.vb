@@ -5,7 +5,7 @@ Imports Tinkerforge
 Module ExamplePixelMatrix
     Const HOST As String = "localhost"
     Const PORT As Integer = 4223
-    Const UID As String = "XYZ" ' Change to your UID
+    Const UID As String = "XYZ" ' Change XYZ to the UID of your OLED 128x64 Bricklet
     Const WIDTH As Integer = 128
     Const HEIGHT As Integer = 64
 

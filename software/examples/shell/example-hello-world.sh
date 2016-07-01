@@ -1,7 +1,7 @@
 #!/bin/sh
 # Connects to localhost:4223 by default, use --host and --port to change this
 
-uid=XYZ # Change to your UID
+uid=XYZ # Change XYZ to the UID of your OLED 128x64 Bricklet
 
 # Clear display
 tinkerforge call oled-128x64-bricklet $uid clear-display

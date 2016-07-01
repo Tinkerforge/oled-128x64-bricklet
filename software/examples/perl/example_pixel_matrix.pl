@@ -5,7 +5,7 @@ use Tinkerforge::BrickletOLED128x64;
 
 use constant HOST => 'localhost';
 use constant PORT => 4223;
-use constant UID => 'XYZ'; # Change to your UID
+use constant UID => 'XYZ'; # Change XYZ to the UID of your OLED 128x64 Bricklet
 use constant WIDTH => 128;
 use constant HEIGHT => 64;
 

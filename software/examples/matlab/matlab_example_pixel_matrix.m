@@ -4,7 +4,7 @@ function matlab_example_pixel_matrix()
 
     HOST = 'localhost';
     PORT = 4223;
-    UID = 'XYZ'; % Change to your UID
+    UID = 'XYZ'; % Change XYZ to the UID of your OLED 128x64 Bricklet
     SCREEN_WIDTH = 128;
     SCREEN_HEIGHT = 64;
 

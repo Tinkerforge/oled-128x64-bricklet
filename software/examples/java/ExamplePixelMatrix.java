@@ -4,7 +4,9 @@ import com.tinkerforge.BrickletOLED128x64;
 public class ExamplePixelMatrix {
 	private static final String HOST = "localhost";
 	private static final int PORT = 4223;
-	private static final String UID = "XYZ"; // Change to your UID
+
+	// Change XYZ to the UID of your OLED 128x64 Bricklet
+	private static final String UID = "XYZ";
 	private static final short SCREEN_WIDTH = 128;
 	private static final short SCREEN_HEIGHT = 64;
 

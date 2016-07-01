@@ -8,7 +8,7 @@ include Tinkerforge
 
 HOST = 'localhost'
 PORT = 4223
-UID = 'XYZ' # Change to your UID
+UID = 'XYZ' # Change XYZ to the UID of your OLED 128x64 Bricklet
 
 ipcon = IPConnection.new # Create IP connection
 oled = BrickletOLED128x64.new UID, ipcon # Create device object

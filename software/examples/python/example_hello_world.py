@@ -3,7 +3,7 @@
 
 HOST = "localhost"
 PORT = 4223
-UID = "XYZ" # Change to your UID
+UID = "XYZ" # Change XYZ to the UID of your OLED 128x64 Bricklet
 
 from tinkerforge.ip_connection import IPConnection
 from tinkerforge.bricklet_oled_128x64 import BrickletOLED128x64
