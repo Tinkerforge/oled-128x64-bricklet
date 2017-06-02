@@ -5,8 +5,8 @@ function octave_example_hello_world()
     PORT = 4223;
     UID = "XYZ"; % Change XYZ to the UID of your OLED 128x64 Bricklet
 
-    ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
-    oled = java_new("com.tinkerforge.BrickletOLED128x64", UID, ipcon); % Create device object
+    ipcon = javaObject("com.tinkerforge.IPConnection"); % Create IP connection
+    oled = javaObject("com.tinkerforge.BrickletOLED128x64", UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected

@@ -47,8 +47,8 @@ function octave_example_pixel_matrix()
         end
     end
 
-    ipcon = java_new("com.tinkerforge.IPConnection"); % Create IP connection
-    oled = java_new("com.tinkerforge.BrickletOLED128x64", UID, ipcon); % Create device object
+    ipcon = javaObject("com.tinkerforge.IPConnection"); % Create IP connection
+    oled = javaObject("com.tinkerforge.BrickletOLED128x64", UID, ipcon); % Create device object
 
     ipcon.connect(HOST, PORT); % Connect to brickd
     % Don't use device before ipcon is connected
