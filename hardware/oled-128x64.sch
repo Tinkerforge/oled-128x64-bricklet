@@ -29,7 +29,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:oled-128x64-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -44,7 +43,7 @@ Comment2 "Copyright (©) 2016, B.Nordmeyer <bastian@tinkerforge.com>"
 Comment3 ""
 Comment4 ""
 $EndDescr
-Text Notes 4250 7500 0    40   ~ 0
+Text Notes 550  7750 0    40   ~ 0
 Copyright Tinkerforge GmbH 2015.\nThis documentation describes Open Hardware and is licensed under the\nCERN OHL v. 1.1.\nYou may redistribute and modify this documentation under the terms of the\nCERN OHL v.1.1. (http://ohwr.org/cernohl). This documentation is distributed\nWITHOUT ANY EXPRESS OR IMPLIED WARRANTY, INCLUDING OF\nMERCHANTABILITY, SATISFACTORY QUALITY AND FITNESS FOR A\nPARTICULAR PURPOSE. Please see the CERN OHL v.1.1 for applicable\nconditions\n
 $Comp
 L DRILL U5
@@ -141,7 +140,7 @@ U 1 1 542C1080
 P 2750 2100
 F 0 "C1" V 2600 2050 50  0000 L CNN
 F 1 "100nF" V 2900 2000 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 2750 2100 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 2750 2100 60  0001 C CNN
 F 3 "" H 2750 2100 60  0000 C CNN
 	1    2750 2100
 	0    1    1    0   
@@ -241,7 +240,7 @@ U 1 1 55840E1C
 P 8200 4800
 F 0 "C11" V 8050 4750 50  0000 L CNN
 F 1 "100nF" V 8350 4700 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 8200 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 8200 4800 60  0001 C CNN
 F 3 "" H 8200 4800 60  0000 C CNN
 	1    8200 4800
 	-1   0    0    1   
@@ -252,7 +251,7 @@ U 1 1 55841041
 P 7800 4800
 F 0 "C9" V 7650 4750 50  0000 L CNN
 F 1 "10µF" V 7950 4700 50  0000 L CNN
-F 2 "kicad-libraries:0805" H 7800 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0805" H 7800 4800 60  0001 C CNN
 F 3 "" H 7800 4800 60  0000 C CNN
 	1    7800 4800
 	-1   0    0    1   
@@ -263,7 +262,7 @@ U 1 1 5584109E
 P 6950 4800
 F 0 "R1" V 7030 4800 50  0000 C CNN
 F 1 "390k" V 6950 4800 50  0000 C CNN
-F 2 "kicad-libraries:0603E" H 6950 4800 60  0001 C CNN
+F 2 "kicad-libraries:R0603E" H 6950 4800 60  0001 C CNN
 F 3 "" H 6950 4800 60  0000 C CNN
 	1    6950 4800
 	1    0    0    -1  
@@ -274,7 +273,7 @@ U 1 1 55841127
 P 7400 4800
 F 0 "C7" V 7250 4750 50  0000 L CNN
 F 1 "4.7µF/25V" V 7550 4700 50  0000 L CNN
-F 2 "kicad-libraries:0805" H 7400 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0805" H 7400 4800 60  0001 C CNN
 F 3 "" H 7400 4800 60  0000 C CNN
 	1    7400 4800
 	-1   0    0    1   
@@ -344,7 +343,7 @@ U 1 1 55841744
 P 5450 4800
 F 0 "C3" V 5300 4750 50  0000 L CNN
 F 1 "4.7µF/25V" V 5600 4700 50  0000 L CNN
-F 2 "kicad-libraries:0805" H 5450 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0805" H 5450 4800 60  0001 C CNN
 F 3 "" H 5450 4800 60  0000 C CNN
 	1    5450 4800
 	-1   0    0    1   
@@ -355,7 +354,7 @@ U 1 1 5584198A
 P 5850 4800
 F 0 "C4" V 5700 4750 50  0000 L CNN
 F 1 "100nF" V 6000 4700 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 5850 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 5850 4800 60  0001 C CNN
 F 3 "" H 5850 4800 60  0000 C CNN
 	1    5850 4800
 	-1   0    0    1   
@@ -419,7 +418,7 @@ U 1 1 55841CDF
 P 8100 1850
 F 0 "C10" V 7950 1800 50  0000 L CNN
 F 1 "1µF" V 8250 1750 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 8100 1850 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 8100 1850 60  0001 C CNN
 F 3 "" H 8100 1850 60  0000 C CNN
 	1    8100 1850
 	0    -1   -1   0   
@@ -430,7 +429,7 @@ U 1 1 55841F19
 P 7550 2050
 F 0 "C8" V 7400 2000 50  0000 L CNN
 F 1 "1µF" V 7700 1950 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 7550 2050 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 7550 2050 60  0001 C CNN
 F 3 "" H 7550 2050 60  0000 C CNN
 	1    7550 2050
 	0    -1   -1   0   
@@ -472,7 +471,7 @@ U 1 1 55842711
 P 6700 4800
 F 0 "C6" V 6550 4750 50  0000 L CNN
 F 1 "100nF" V 6850 4700 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 6700 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 6700 4800 60  0001 C CNN
 F 3 "" H 6700 4800 60  0000 C CNN
 	1    6700 4800
 	-1   0    0    1   
@@ -483,7 +482,7 @@ U 1 1 558427A7
 P 6300 4800
 F 0 "C5" V 6150 4750 50  0000 L CNN
 F 1 "4.7µF/25V" V 6450 4700 50  0000 L CNN
-F 2 "kicad-libraries:0805" H 6300 4800 60  0001 C CNN
+F 2 "kicad-libraries:C0805" H 6300 4800 60  0001 C CNN
 F 3 "" H 6300 4800 60  0000 C CNN
 	1    6300 4800
 	-1   0    0    1   
@@ -696,7 +695,7 @@ U 1 1 55910DAD
 P 4050 4200
 F 0 "C2" V 3900 4150 50  0000 L CNN
 F 1 "100nF" V 4200 4100 50  0000 L CNN
-F 2 "kicad-libraries:0603E" H 4050 4200 60  0001 C CNN
+F 2 "kicad-libraries:C0603E" H 4050 4200 60  0001 C CNN
 F 3 "" H 4050 4200 60  0000 C CNN
 	1    4050 4200
 	0    1    1    0   
