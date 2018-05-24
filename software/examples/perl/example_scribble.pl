@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use strict;
 use Math::Trig;
 use Term::ReadKey;
 use GD;
