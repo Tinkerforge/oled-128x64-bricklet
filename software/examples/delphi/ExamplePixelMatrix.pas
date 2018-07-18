@@ -11,7 +11,7 @@ const
   HEIGHT = 64;
 
 type
-  TPixels = array[0..(HEIGHT - 1), 0..(WIDTH - 1)] of boolean;
+  TPixels = array [0..(HEIGHT - 1), 0..(WIDTH - 1)] of boolean;
   TExample = class
   private
     ipcon: TIPConnection;
@@ -31,7 +31,7 @@ var
 
 procedure TExample.DrawMatrix(pixels: TPixels);
 var row, column, bit, i: integer;
-    pages: array[0..(HEIGHT div 8 - 1), 0..(WIDTH - 1)] of byte;
+    pages: array [0..(HEIGHT div 8 - 1), 0..(WIDTH - 1)] of byte;
     section: array [0..63] of byte;
 begin
   for row := 0 to HEIGHT div 8 - 1 do begin
