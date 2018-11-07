@@ -1,6 +1,6 @@
 use std::{error::Error, io};
 
-use tinkerforge::{ipconnection::IpConnection, oled_128x64_bricklet::*};
+use tinkerforge::{ip_connection::IpConnection, oled_128x64_bricklet::*};
 
 const HOST: &str = "127.0.0.1";
 const PORT: u16 = 4223;
@@ -8,7 +8,7 @@ const UID: &str = "XYZ"; // Change XYZ to the UID of your OLED 128x64 Bricklet
 const WIDTH: usize = 128;
 const HEIGHT: usize = 64;
 
-fn draw_matrix(oled: &OLED128x64Bricklet, pixels: [[bool; WIDTH]; HEIGHT]) {
+fn draw_matrix(oled: &Oled128x64Bricklet, pixels: [[bool; WIDTH]; HEIGHT]) {
     let mut pages = [[0u8; WIDTH]; HEIGHT / 8];
     for (col_idx, col) in pages.iter_mut().enumerate() {
         for (row_idx, byte) in col.iter_mut().enumerate() {
@@ -33,13 +33,13 @@ fn draw_matrix(oled: &OLED128x64Bricklet, pixels: [[bool; WIDTH]; HEIGHT]) {
 
 fn main() -> Result<(), Box<dyn Error>> {
     let ipcon = IpConnection::new(); // Create IP connection
-    let oled_128x64_bricklet = OLED128x64Bricklet::new(UID, &ipcon); // Create device object
+    let oled = Oled128x64Bricklet::new(UID, &ipcon); // Create device object
 
-    ipcon.connect(HOST, PORT).recv()??; // Connect to brickd
-                                        // Don't use device before ipcon is connected
+    ipcon.connect((HOST, PORT)).recv()??; // Connect to brickd
+                                          // Don't use device before ipcon is connected
 
     // Clear display
-    oled_128x64_bricklet.clear_display();
+    oled.clear_display();
 
     // Draw checkerboard pattern
     let mut pixels = [[false; WIDTH]; HEIGHT];
@@ -49,7 +49,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-    draw_matrix(&oled_128x64_bricklet, pixels);
+    draw_matrix(&oled, pixels);
 
     println!("Press enter to exit.");
     let mut _input = String::new();
