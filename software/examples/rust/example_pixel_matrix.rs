@@ -4,7 +4,7 @@ use tinkerforge::{ip_connection::IpConnection, oled_128x64_bricklet::*};
 
 const HOST: &str = "127.0.0.1";
 const PORT: u16 = 4223;
-const UID: &str = "BhX"; // Change XYZ to the UID of your OLED 128x64 Bricklet
+const UID: &str = "XYZ"; // Change XYZ to the UID of your OLED 128x64 Bricklet
 const WIDTH: usize = 128;
 const HEIGHT: usize = 64;
 
@@ -23,9 +23,9 @@ fn draw_matrix(oled: &Oled128x64Bricklet, pixels: [[bool; WIDTH]; HEIGHT]) {
     oled.new_window(0, (WIDTH - 1) as u8, 0, (HEIGHT / 8 - 1) as u8);
 
     for row in 0..HEIGHT / 8 {
-        for col in (0..WIDTH).step_by(HEIGHT) {            
+        for col in (0..WIDTH).step_by(64) {            
             let mut arr = [0u8; 64];
-            arr.copy_from_slice(&pages[row][col..col + HEIGHT]);
+            arr.copy_from_slice(&pages[row][col..col + 64]);
             oled.write(arr);
         }
     }
