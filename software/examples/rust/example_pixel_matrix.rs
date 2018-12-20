@@ -23,7 +23,7 @@ fn draw_matrix(oled: &Oled128x64Bricklet, pixels: [[bool; WIDTH]; HEIGHT]) {
     oled.new_window(0, (WIDTH - 1) as u8, 0, (HEIGHT / 8 - 1) as u8);
 
     for row in 0..HEIGHT / 8 {
-        for col in (0..WIDTH).step_by(64) {            
+        for col in (0..WIDTH).step_by(64) {
             let mut arr = [0u8; 64];
             arr.copy_from_slice(&pages[row][col..col + 64]);
             oled.write(arr);
