@@ -1,0 +1,21 @@
+# Change XYZ to the UID of your OLED 128x64 Bricklet
+
+setup:
+    set WIDTH to 128
+    set HEIGHT to 64
+
+	# Clear display
+	publish '' to tinkerforge/request/oled_128x64_bricklet/XYZ/clear_display 
+    
+    set pixels to create_pixel_pattern() # This function should create a checkerboard pattern as an array of booleans. See examples for other languages.
+    
+    set pages to create_pages_from_pixels() # This function should translate a pixel array to a page array, See drawMatrix in examples for other languages.
+    
+    set column_to to WIDTH - 1
+    set row_to to HEIGHT / 8 - 1
+    
+    publish {"column_from": 0, "column_to": column_to, "row_from": 0, "row_to": row_to} to tinkerforge/request/oled_128x64_bricklet/XYZ/new_window
+    
+    for row in 0..HEIGHT/8:
+        publish {"data": pages[row]} to tinkerforge/request/oled_128x64_bricklet/XYZ/write
+    endfor
