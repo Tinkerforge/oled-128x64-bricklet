@@ -3,5 +3,6 @@
 setup:
 	# Clear display
 	publish '' to tinkerforge/request/oled_128x64_bricklet/XYZ/clear_display 
+	
 	# Write "Hello World" starting from upper left corner of the screen
 	publish '{"line": 0, "position": 0, "text": "Hello World"}' to tinkerforge/request/oled_128x64_bricklet/XYZ/write_line 
