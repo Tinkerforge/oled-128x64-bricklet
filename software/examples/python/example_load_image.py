@@ -72,5 +72,5 @@ if __name__ == "__main__":
 
     draw_matrix(oled, 0, 0, WIDTH, HEIGHT, pixels)
 
-    raw_input('Press key to exit\n') # Use input() in Python 3
+    input("Press key to exit\n") # Use raw_input() in Python 2
     ipcon.disconnect()
