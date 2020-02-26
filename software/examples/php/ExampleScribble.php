@@ -13,7 +13,7 @@ use Tinkerforge\BrickletOLED128x64;
 
 const HOST = 'localhost';
 const PORT = 4223;
-const UID = 'XYZ'; // Change to your UID
+const UID = 'XYZ'; // Change XYZ to the UID of your OLED 128x64 Bricklet
 const WIDTH = 128; // Columns (each 1 pixel wide)
 const HEIGHT = 8; // Rows (each 8 pixels high)
 

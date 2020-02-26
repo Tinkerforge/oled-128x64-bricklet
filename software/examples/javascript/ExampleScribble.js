@@ -4,7 +4,7 @@ var getPixels = require('get-pixels');
 
 var HOST = 'localhost';
 var PORT = 4223;
-var UID = 'XYZ'; // Change to your UID
+var UID = 'XYZ'; // Change XYZ to the UID of your OLED 128x64 Bricklet
 var WIDTH = 128;
 var HEIGHT = 64;
 
