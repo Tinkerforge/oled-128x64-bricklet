@@ -14,10 +14,10 @@ fn main() -> Result<(), Box<dyn Error>> {
                                           // Don't use device before ipcon is connected.
 
     // Clear display
-    oled.clear_display();
+    oled.clear_display().recv()?;
 
     // Write "Hello World" starting from upper left corner of the screen
-    oled.write_line(0, 0, "Hello World".to_string());
+    oled.write_line(0, 0, "Hello World".to_string()).recv()?;
 
     println!("Press enter to exit.");
     let mut _input = String::new();
