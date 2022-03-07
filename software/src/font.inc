@@ -1,4 +1,4 @@
-// Standard ASCII 5x7 font
+// Standard ASCII 5x7 font, code page 437
 
 const uint8_t font[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00,
