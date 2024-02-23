@@ -36,7 +36,7 @@ Module ExampleScribble
             For column As Integer = 0 To WIDTH - 1 Step 64
                 Array.Copy(pages(row), column, section, 0, 64)
                 oled.Write(section)
-            Next row
+            Next column
         Next row
     End Sub
 

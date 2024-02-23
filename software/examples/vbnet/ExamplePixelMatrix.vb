@@ -34,7 +34,7 @@ Module ExamplePixelMatrix
             For column As Integer = 0 To WIDTH - 1 Step 64
                 Array.Copy(pages(row), column, section, 0, 64)
                 oled.Write(section)
-            Next row
+            Next column
         Next row
     End Sub
 
@@ -56,8 +56,8 @@ Module ExamplePixelMatrix
 
             For column As Integer = 0 To WIDTH - 1
                 pixels(row)(column) = (row \ 8) Mod 2 = (column \ 8) Mod 2
-            Next row
-        Next column
+            Next column
+        Next row
 
         DrawMatrix(oled, pixels)
 
